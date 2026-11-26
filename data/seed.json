@@ -1,0 +1,14 @@
+{
+  "offers": [
+    {"company": "恒锐科技", "base": 260000, "bonus": 40000, "days_per_week": 5, "commute_min": 55, "rent_delta": 1800, "growth": 0.45, "note": "运营专员，双休"},
+    {"company": "青禾数据", "base": 220000, "bonus": 0, "days_per_week": 5, "commute_min": 25, "rent_delta": 0, "growth": 0.7, "options": 8000, "strike": 12, "preferred_price": 30, "note": "小团队，期权 8000 股"},
+    {"company": "北岸集团", "base": 195000, "bonus": 25000, "days_per_week": 4.5, "commute_min": 80, "rent_delta": 2600, "growth": 0.3, "note": "四天半，通勤远"}
+  ],
+  "assumptions": [
+    {"key": "pay", "value": "0.5", "why": "先看现金流"},
+    {"key": "growth", "value": "0.3", "why": "转行第一份，成长权重要"},
+    {"key": "cost", "value": "0.2", "why": "通勤与房租折成年化"},
+    {"key": "期权行权价", "value": "12 元", "why": "青禾给的员工价"},
+    {"key": "优先价", "value": "30 元", "why": "上一轮融资价，作上限参考"}
+  ]
+}

@@ -52,7 +52,7 @@ def seed(db: Path = typer.Option(None)) -> None:
     console.print(f"已写入 {len(data['offers'])} 个 offer")
 
 
-@app.command()
+@app.command("board")
 def board_cmd(db: Path = typer.Option(None)) -> None:
     """摊平表与扣分。"""
     store = _store(_settings(db))
@@ -63,10 +63,9 @@ def board_cmd(db: Path = typer.Option(None)) -> None:
     console.print(f"合计扣 {b.penalty_total} 分")
 
 
-app.command(name="board")(board_cmd)
 
 
-@app.command()
+@app.command("note")
 def note_cmd(db: Path = typer.Option(None)) -> None:
     """模型写一页纸（无 key 时打印假设）。"""
     s = _settings(db)
@@ -81,7 +80,6 @@ def note_cmd(db: Path = typer.Option(None)) -> None:
             console.print(line)
 
 
-app.command(name="note")(note_cmd)
 
 
 @app.command()

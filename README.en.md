@@ -51,6 +51,9 @@ Three exit scenarios averaged; it is a reference, not a promise.
 **Do the weights have to sum to 1?**
 Yes, otherwise the score is rejected.
 
+**Was the Docker image verified?**
+Docker is not installed on the build machine, so `docker build .` was not run and the image is unverified; only the Dockerfile and ports were checked statically.
+
 ## Commands
 
 See the Chinese README (`README.md`) for the command table with flags; every command supports `--help`.
@@ -63,14 +66,14 @@ FastAPI + Uvicorn, Jinja2, pydantic / pydantic-settings, httpx, Typer + Rich, SQ
 
 ```mermaid
 graph LR
-  A[offer] --> M[年化 / 时薪]
-  B[通勤与房租] --> M[成本]
-  C[期权] --> M[三档期望]
-  D[权重] --> M[加权评分]
-  M --> R[规则：通勤 / 权重 / 期权假设]
-  R --> P[模型写一页纸]
-  P --> G[数字守卫]
-  G --> O[排名表]
+  A[offer] --> M[annualized / hourly]
+  B[commute and rent] --> M[cost]
+  C[options] --> M[three scenarios]
+  D[weights] --> M[weighted score]
+  M --> R[rules: commute / weights / option assumptions]
+  R --> P[model writes one-pager]
+  P --> G[number guard]
+  G --> O[ranking table]
 ```
 
 ## Layout

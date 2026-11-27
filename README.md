@@ -78,6 +78,9 @@ python -m shortlist serve        # http://127.0.0.1:8006
 **成长分谁打？**
 自己打，工具不给建议。
 
+**Docker 镜像验证了吗？**
+本机没有 Docker，`docker build .` 未执行，镜像未构建验证；Dockerfile 与端口只做了静态核对。
+
 ## 命令参考
 
 | 命令 | 作用 | 常用参数 |

@@ -64,8 +64,6 @@ def board_cmd(db: Path = typer.Option(None)) -> None:
     console.print(f"合计扣 {b.penalty_total} 分")
 
 
-
-
 @app.command("note")
 def note_cmd(db: Path = typer.Option(None)) -> None:
     """模型写一页纸（无 key 时打印假设）。"""
@@ -80,8 +78,6 @@ def note_cmd(db: Path = typer.Option(None)) -> None:
     if not text:
         for line in assumptions(store):
             console.print(line)
-
-
 
 
 @app.command()

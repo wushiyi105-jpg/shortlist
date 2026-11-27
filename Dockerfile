@@ -5,6 +5,7 @@ WORKDIR /app
 
 COPY pyproject.toml README.md ./
 COPY shortlist ./shortlist
+COPY data ./data
 COPY templates ./templates
 COPY prompts ./prompts
 COPY migrations ./migrations
@@ -26,6 +27,7 @@ COPY --from=builder /install /usr/local
 COPY --from=builder /app/templates ./templates
 COPY --from=builder /app/prompts ./prompts
 COPY --from=builder /app/shortlist ./shortlist
+COPY --from=builder /app/data ./data
 COPY --from=builder /app/migrations ./migrations
 COPY --from=builder /app/alembic.ini ./
 
@@ -34,3 +36,4 @@ VOLUME ["/data"]
 EXPOSE 8006
 
 CMD ["uvicorn", "shortlist.iface.web:app_factory", "--factory", "--host", "0.0.0.0", "--port", "8006"]
+

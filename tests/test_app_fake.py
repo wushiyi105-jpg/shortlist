@@ -1,19 +1,24 @@
-"""主用例只依赖 ports：用 MagicMock 内存假实现，不建 SQLite 文件。"""
+"""真实内存 Store 跑 board：不建 SQLite，mypy 校验 StorePort。"""
 
 from __future__ import annotations
 
-from unittest.mock import MagicMock
-
 from shortlist.app.run import board
+from shortlist.domain.models import Offer, Weights
 from shortlist.ports import StorePort
 
 
-def test_main_path_with_memory_store(tmp_path) -> None:
-    store = MagicMock(spec=StorePort)
-    from shortlist.domain.models import Weights
-    store.list_offers.return_value = []
-    store.weights.return_value = Weights()
-    
+class InMemoryStore:
+    def list_offers(self) -> list[Offer]:
+        return []
+
+    def weights(self) -> Weights:
+        return Weights()
+
+    def list_assumptions(self) -> list[tuple[str, str, str]]:
+        return []
+
+
+def test_board_with_memory_store() -> None:
+    store: StorePort = InMemoryStore()
     out = board(store)
-    assert out is not None
-    assert not (tmp_path / "app.db").exists()
+    assert out.rows == []

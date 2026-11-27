@@ -11,6 +11,7 @@ from rich.console import Console
 from ..adapters.llm import build_llm
 from ..adapters.notify import WebhookNotifier
 from ..adapters.store import SqliteStore
+from ..app.compare import build_report
 from ..app.run import PROMPT, assumptions, board, note, table
 from ..config import Settings
 from ..config import settings as default_settings
@@ -70,6 +71,31 @@ def board_cmd(db: Path = typer.Option(None)) -> None:
     for f in b.findings:
         console.print(f"  [yellow]{f.rule_id}[/] -{f.penalty} {f.message}")
     console.print(f"合计扣 {b.penalty_total} 分")
+
+
+@app.command()
+def compare(
+    city: str = typer.Option("深圳", help="北京/上海/深圳/杭州/成都/广州/南京/武汉"),
+    out: Path = typer.Option(None, help="输出 Markdown；不填打印到终端"),
+    db: Path = typer.Option(None),
+) -> None:
+    """一张对比表 + 5 个该问 HR 的问题，导出就能转发。"""
+    store = _store(_settings(db))
+    offers = store.list_offers()
+    if not offers:
+        console.print("[red]还没有 offer，先跑 seed 或加一条[/]")
+        raise typer.Exit(code=2)
+    try:
+        body = build_report(board(store), offers, city)
+    except ValueError as exc:
+        console.print(f"[red]{exc}[/]")
+        raise typer.Exit(code=2) from exc
+    if out:
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(body, encoding="utf-8")
+        console.print(f"[green]已写出[/] {out}（{len(body.splitlines())} 行）")
+    else:
+        console.print(body)
 
 
 @app.command("note")

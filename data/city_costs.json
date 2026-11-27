@@ -1,0 +1,30 @@
+{
+  "note": "社保/公积金基数与个人费率按 2025–2026 各市公开口径估算，个税用月度速算，不做累计预扣；租金为一人住一居室中位估算。",
+  "cities": [
+    {"name": "北京", "social_min": 6821, "social_max": 35283, "housing_rate": 0.07, "rent": 6500, "commute": 300},
+    {"name": "上海", "social_min": 7384, "social_max": 36921, "housing_rate": 0.07, "rent": 6200, "commute": 300},
+    {"name": "深圳", "social_min": 4492, "social_max": 32376, "housing_rate": 0.05, "rent": 5200, "commute": 250},
+    {"name": "杭州", "social_min": 4812, "social_max": 24930, "housing_rate": 0.07, "rent": 4000, "commute": 200},
+    {"name": "成都", "social_min": 4511, "social_max": 22494, "housing_rate": 0.06, "rent": 2200, "commute": 150},
+    {"name": "广州", "social_min": 4546, "social_max": 27258, "housing_rate": 0.05, "rent": 3500, "commute": 200},
+    {"name": "南京", "social_min": 4879, "social_max": 24396, "housing_rate": 0.08, "rent": 3200, "commute": 200},
+    {"name": "武汉", "social_min": 4494, "social_max": 23676, "housing_rate": 0.08, "rent": 2400, "commute": 180}
+  ],
+  "employee_rates": {"pension": 0.08, "medical": 0.02, "unemployment": 0.005},
+  "tax_brackets": [
+    {"up_to": 3000, "rate": 0.03, "quick": 0},
+    {"up_to": 12000, "rate": 0.10, "quick": 210},
+    {"up_to": 25000, "rate": 0.20, "quick": 1410},
+    {"up_to": 35000, "rate": 0.25, "quick": 2660},
+    {"up_to": 55000, "rate": 0.30, "quick": 4410},
+    {"up_to": 80000, "rate": 0.35, "quick": 7160},
+    {"up_to": null, "rate": 0.45, "quick": 15160}
+  ],
+  "hr_questions": [
+    "社保和公积金按什么基数缴？试用期是否打折？",
+    "年终奖保底几个月，什么时候发，离职当年怎么折？",
+    "期权总池多少、已发多少、行权价多少、离职回购按什么价？",
+    "加班和值班频率如何？周末加班是调休还是给钱？",
+    "试用期多长、转正条件是什么、绩效分布怎么定？"
+  ]
+}

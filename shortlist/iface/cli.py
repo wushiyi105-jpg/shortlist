@@ -8,8 +8,9 @@ from pathlib import Path
 import typer
 from rich.console import Console
 
+from ..adapters.llm import build_llm
 from ..adapters.store import SqliteStore
-from ..app.run import assumptions, board, note, table
+from ..app.run import PROMPT, assumptions, board, note, table
 from ..config import Settings
 from ..config import settings as default_settings
 from ..doctor import main as doctor_main
@@ -70,7 +71,8 @@ def note_cmd(db: Path = typer.Option(None)) -> None:
     """模型写一页纸（无 key 时打印假设）。"""
     s = _settings(db)
     store = _store(s)
-    text, notes = note(store, s)
+    llm = build_llm(s.llm_base_url, s.llm_api_key, s.llm_model, PROMPT) if s.llm_enabled else None
+    text, notes = note(store, s, llm)
     if text:
         console.print(text)
     for n in notes:

@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from alembic import command
+from alembic.config import Config
 from sqlalchemy import Float, Integer, String, inspect, select
 from sqlalchemy.orm import Mapped, mapped_column, sessionmaker
 from sqlalchemy.orm import Session as OrmSession
@@ -45,6 +47,14 @@ class JobRow(Base):
     idem_key: Mapped[str] = mapped_column(String(80), unique=True)
 
 
+def _upgrade_schema(engine) -> None:
+    root = next(p for p in Path(__file__).resolve().parents if (p / "alembic.ini").exists())
+    cfg = Config(str(root / "alembic.ini"))
+    cfg.set_main_option("script_location", str(root / "migrations"))
+    cfg.set_main_option("sqlalchemy.url", f"sqlite:///{engine.url.database}")
+    command.upgrade(cfg, "head")
+
+
 class SqliteStore:
     def __init__(self, path: Path | str) -> None:
         self.path = Path(path)
@@ -53,7 +63,7 @@ class SqliteStore:
         self.init_schema()
 
     def init_schema(self) -> None:
-        Base.metadata.create_all(self.engine)
+        _upgrade_schema(self.engine)
 
     def schema_ok(self) -> bool:
         return {"offers", "assumptions", "jobs"} <= set(inspect(self.engine).get_table_names())

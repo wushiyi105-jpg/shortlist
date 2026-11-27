@@ -52,7 +52,7 @@ Three exit scenarios averaged; it is a reference, not a promise.
 Yes, otherwise the score is rejected.
 
 **Was the Docker image verified?**
-Docker is not installed on the build machine, so `docker build .` was not run and the image is unverified; only the Dockerfile and ports were checked statically.
+The CI `docker` job runs `docker build .`, starts the container and polls `/health`; Docker is not installed locally, so it was not re-run on the build machine.
 
 ## Commands
 

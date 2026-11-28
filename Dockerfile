@@ -7,6 +7,7 @@ COPY pyproject.toml README.md ./
 COPY shortlist ./shortlist
 COPY data ./data
 COPY templates ./templates
+COPY static ./static
 COPY prompts ./prompts
 COPY migrations ./migrations
 COPY alembic.ini ./
@@ -25,6 +26,7 @@ WORKDIR /app
 
 COPY --from=builder /install /usr/local
 COPY --from=builder /app/templates ./templates
+COPY --from=builder /app/static ./static
 COPY --from=builder /app/prompts ./prompts
 COPY --from=builder /app/shortlist ./shortlist
 COPY --from=builder /app/data ./data

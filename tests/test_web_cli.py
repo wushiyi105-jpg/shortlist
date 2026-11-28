@@ -22,7 +22,7 @@ def test_index(store, settings):
     client = TestClient(create_app(settings, store))
     body = client.get("/").text
     assert client.get("/").status_code == 200
-    assert "摊平对比" in body
+    assert "摊开的录用信" in body
 
 
 def test_index_without_offers(store, settings):
@@ -39,3 +39,4 @@ def test_cli_board_and_negative(tmp_path):
 def test_doctor_green(settings):
     checks, ok = run_doctor(settings)
     assert ok is True
+

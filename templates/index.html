@@ -1,6 +1,6 @@
 {% from "_macros.html" import shell, head, stats, card, tag, empty, note %}
-{% call shell("Shortlist", "offer 对比", true) %}
-{{ head("Offer 对比", "权重 薪酬 " ~ weights.pay ~ " / 成长 " ~ weights.growth ~ " / 成本 " ~ weights.cost) }}
+{% call shell("Shortlist", "Offer 决策纸", true) %}
+{{ head("选哪份 Offer", "权重 薪酬 " ~ weights.pay ~ " / 成长 " ~ weights.growth ~ " / 成本 " ~ weights.cost) }}
 
 {{ stats([
   ("候选 Offer", b.rows|length, "个"),
@@ -9,24 +9,20 @@
   ("扣分", b.penalty_total, "")
 ]) }}
 
-{% call card("摊平对比", "年化、时薪、成本、期权统一口径") %}
+{% call card("摊开的录用信", "同一口径下横向比较") %}
 {% if b.rows %}
-<div class="table-wrap">
-  <table class="table">
-    <thead><tr><th>公司</th><th class="num">年化</th><th class="num">时薪</th><th class="num">成本</th><th class="num">期权期望</th><th class="num">分</th></tr></thead>
-    <tbody>
-      {% for r in b.rows %}
-      <tr>
-        <td class="strong">{{ r.company }}</td>
-        <td class="num">{{ "{:,.0f}".format(r.annual) }}</td>
-        <td class="num">{{ "{:,.0f}".format(r.hourly) }}</td>
-        <td class="num">{{ "{:,.0f}".format(r.cost) }}</td>
-        <td class="num">{{ "{:,.0f}".format(r.equity.expected) }}</td>
-        <td class="num strong">{{ r.score }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<div class="offers">
+  {% for r in b.rows %}
+  <div class="offer">
+    <div class="co">{{ r.company }} {% if r.score == b.rows|map(attribute="score")|max %}{{ tag("最高分", "accent") }}{% endif %}</div>
+    <div class="amount">{{ "{:,.0f}".format(r.annual) }}<small>元 / 年</small></div>
+    <div class="detail">时薪 {{ "{:,.0f}".format(r.hourly) }} 元 · 成本 {{ "{:,.0f}".format(r.cost) }} 元</div>
+    <dl>
+      <dt>期权期望</dt><dd>{{ "{:,.0f}".format(r.equity.expected) }}</dd>
+      <dt>综合分</dt><dd>{{ r.score }}</dd>
+    </dl>
+  </div>
+  {% endfor %}
 </div>
 {% else %}
 {{ empty("还没有候选 Offer", "先跑 seed 写入示例，或补一份 offer。") }}
